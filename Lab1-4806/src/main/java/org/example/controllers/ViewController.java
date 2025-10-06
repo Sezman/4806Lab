@@ -22,4 +22,10 @@ public class ViewController {
         model.addAttribute("addressBook", ab);
         return "addressbook"; // maps to addressbook.html
     }
+
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/addressbooks/1/view"; // change 1 to any valid id
+    }
+
 }
