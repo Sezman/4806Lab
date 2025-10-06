@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.repositories.AddressBookRepository;
 import org.example.repositories.BuddyInfoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,12 @@ public class BuddyInfoTest {
     @Autowired
     private BuddyInfoRepository repo;
 
+    @Autowired
+    private AddressBookRepository addressBookRepo;
+
     @BeforeEach
     public void clearDatabase() {
+        addressBookRepo.deleteAll();
         repo.deleteAll();
     }
 
