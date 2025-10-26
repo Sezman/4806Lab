@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.repositories.AddressBookRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,19 +14,24 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(BuddyInfoRepository repo) {
+    public CommandLineRunner demo(AddressBookRepository addressBookRepo, BuddyInfoRepository buddyRepo) {
         return (args) -> {
-            repo.save(new BuddyInfo("Alice", "555-1234"));
-            repo.save(new BuddyInfo("Bob", "555-5678"));
+            // Create a new address book
+            AddressBook addressBook = new AddressBook();
 
-            System.out.println("All buddies:");
-            for (BuddyInfo b : repo.findAll()) {
-                System.out.println(b);
-            }
+            // Create buddies
+            BuddyInfo alice = new BuddyInfo("Alice", "555-1234");
+            BuddyInfo bob = new BuddyInfo("Bob", "555-5678");
 
+            // Add buddies to the address book
+            addressBook.addBuddy(alice);
+            addressBook.addBuddy(bob);
 
-            BuddyInfo alice = repo.findByName("Alice");
-            System.out.println("Found by name: " + alice);
+            // Save everything
+            addressBookRepo.save(addressBook);
+
+            System.out.println("Saved AddressBook with buddies:");
+            System.out.println(addressBook);
         };
     }
 }
