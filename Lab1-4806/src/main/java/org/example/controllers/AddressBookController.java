@@ -26,27 +26,30 @@ public class AddressBookController {
         return addressBookRepo.save(new AddressBook());
     }
 
-    @GetMapping // NEW: List all to make seeding easy
+    @GetMapping
     public List<AddressBook> getAllAddressBooks() {
         return (List<AddressBook>) addressBookRepo.findAll();
     }
 
     @GetMapping("/{id}")
     public Optional<AddressBook> getAddressBook(@PathVariable Long id) {
-        return addressBookRepo.findById(Math.toIntExact(id)); // FIXED: Use Long directly (update repo if needed)
+        return addressBookRepo.findById(Math.toIntExact(id));
     }
 
+    // ✅ FIXED: remove extra "addressbooks/" prefix
     @PostMapping("/{id}/buddies")
     public AddressBook addBuddy(@PathVariable Long id, @RequestBody BuddyInfo buddy) {
         AddressBook ab = addressBookRepo.findById(Math.toIntExact(id))
-                .orElseThrow(() -> new RuntimeException("AddressBook not found: " + id)); // FIXED: Better error
+                .orElseThrow(() -> new RuntimeException("AddressBook not found: " + id));
+
         ab.addBuddy(buddy);
         buddyRepo.save(buddy);
-        return addressBookRepo.save(ab);
+        addressBookRepo.save(ab);
+        return ab;
     }
 
     @DeleteMapping("/{id}/buddies/{buddyId}")
-    public AddressBook removeBuddy(@PathVariable Long id, @PathVariable Long buddyId) { // FIXED: Long for consistency
+    public AddressBook removeBuddy(@PathVariable Long id, @PathVariable Long buddyId) {
         AddressBook ab = addressBookRepo.findById(Math.toIntExact(id))
                 .orElseThrow(() -> new RuntimeException("AddressBook not found: " + id));
         BuddyInfo buddy = buddyRepo.findById(buddyId)

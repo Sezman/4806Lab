@@ -3,14 +3,26 @@
 <head>
     <title>AddressBook</title>
     <meta charset="UTF-8"/>
+    <script src="/js/app.js" defer></script>
 </head>
 <body>
 <h1>AddressBook #[[${addressBook.id}]]</h1>
-<ul>
+
+<ul id="buddyList">
     <li th:each="buddy : ${addressBook.buddies}">
         [[${buddy.name}]] - [[${buddy.phoneNumber}]]
     </li>
 </ul>
 
+<h3>Add a new Buddy</h3>
+<form id="addBuddyForm" th:attr="data-book-id=${addressBook.id}">
+    <label>Name:</label>
+    <input type="text" name="name" required/><br/>
+    <label>Phone:</label>
+    <input type="text" name="phoneNumber" required/><br/>
+    <button type="submit">Add Buddy</button>
+</form>
+
+<a href="/">← Back to Address Books</a>
 </body>
 </html>

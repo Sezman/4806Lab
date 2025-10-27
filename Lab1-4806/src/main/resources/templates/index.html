@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Address Books</title>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<h1>All Address Books</h1>
+
+<!-- List existing address books -->
+<ul>
+    <li th:each="book : ${addressBooks}">
+        <a th:href="@{'/addressbooks/' + ${book.id} + '/view'}"
+           th:text="'Address Book #' + ${book.id}"></a>
+    </li>
+</ul>
+
+<!-- Form to create new address book -->
+<h2>Create New Address Book</h2>
+<form th:action="@{/addressbooks/create}" th:object="${newBook}" method="post">
+    <!-- You can later add a name field if AddressBook has one -->
+    <button type="submit">Create</button>
+</form>
+
+</body>
+</html>
