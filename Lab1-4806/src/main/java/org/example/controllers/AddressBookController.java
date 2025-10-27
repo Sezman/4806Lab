@@ -36,7 +36,6 @@ public class AddressBookController {
         return addressBookRepo.findById(Math.toIntExact(id));
     }
 
-    // ✅ FIXED: remove extra "addressbooks/" prefix
     @PostMapping("/{id}/buddies")
     public AddressBook addBuddy(@PathVariable Long id, @RequestBody BuddyInfo buddy) {
         AddressBook ab = addressBookRepo.findById(Math.toIntExact(id))
